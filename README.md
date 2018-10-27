@@ -10,10 +10,10 @@ Copyright 2018 Junseong Kim, Scatter Lab, respective BERT contributors
 Copyright (c) 2018 Alexander Rush : The Annotated Trasnformer
 
  Environment require:  
-               ---`tqdm ` 
-               ---`numpy`  
-               ---`torch>=0.4.0` 
-               ---`python3.6+` 
+               ---`tqdm `  
+               ---`numpy`   
+               ---`torch>=0.4.0`  
+               ---`python3.6+`  
 
 This version has based on the version in https://github.com/codertimo/BERT-pytorch  
 此中文版本仅基于原作者Junseong Kim与原Google项目的pytorch版本代码作为分享，如有其他用途请与原作者联系  
@@ -34,10 +34,11 @@ Pytorch implementation of Google AI's 2018 BERT, with simple annotation
 
 ## 一、什么是BERT模型？
 
-最近谷歌搞了个大新闻，公司AI团队新发布的BERT模型，在机器阅读理解顶级水平测试SQuAD1.1中表现出惊人的成绩：全部两个衡量指标上全面超越人类，并且还在11种不同NLP测试中创出最佳成绩，包括将GLUE基准推至80.4％（绝对改进7.6％），MultiNLI准确度达到86.7% （绝对改进率5.6％）等。可以预见的是，BERT将为NLP带来里程碑式的改变，也是NLP领域近期最重要的进展。
+最近谷歌搞了个大新闻，公司AI团队新发布的BERT模型，在机器阅读理解顶级水平测试SQuAD1.1中表现出惊人的成绩：全部两个衡量指标上全面超越人类，并且还在11种不同NLP测试中创出最佳成绩，包括将GLUE基准推至80.4％（绝对改进7.6％），MultiNLI准确度达到86.7% （绝对改进率5.6％）等。可以预见的是，BERT将为NLP带来里程碑式的改变，也是NLP领域近期最重要的进展。  
 ![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135223575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)  
 
-谷歌团队的Thang Luong直接定义：BERT模型开启了NLP的新时代  
+
+谷歌团队的Thang Luong直接定义：BERT模型开启了NLP的新时代    
 
 ![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135254746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 
