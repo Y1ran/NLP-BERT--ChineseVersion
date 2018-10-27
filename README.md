@@ -1,7 +1,7 @@
 # NLP-BERT 谷歌自然语言处理模型：BERT-基于pytorch
 **Notice: This is only For the convinience of Chineses reader who cannot read English version directly**
 
-## 完整中文版BERT模型博文请移步我的博客[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)
+## 完整中文版BERT模型分析请移步我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)
 Author-作者
 Junseong Kim, Scatter Lab (codertimo@gmail.com / junseong.kim@scatter.co.kr)
 
@@ -9,14 +9,13 @@ License
 This project following Apache 2.0 License as written in LICENSE file
 
 Copyright 2018 Junseong Kim, Scatter Lab, respective BERT contributors
-
 Copyright (c) 2018 Alexander Rush : The Annotated Trasnformer
 
  Environment require:  
- -tqdm  
- -numpy  
- -torch>=0.4.0  
- -python3.6+  
+               -tqdm  
+               -numpy  
+               -torch>=0.4.0  
+               -python3.6+  
 
 This version has based on the version in https://github.com/codertimo/BERT-pytorch  
 此中文版本仅基于原作者Junseong Kim与原Google项目的pytorch版本代码作为分享，如有其他用途请与原作者联系  
