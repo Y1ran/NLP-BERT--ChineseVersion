@@ -1,6 +1,6 @@
 # NLP-BERT 谷歌自然语言处理模型：BERT-基于pytorch
-**Notice: This is only For the convinience of Chineses reader who cannot read English version directly**
-**文章首发自我的CSDN博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，引用请注明出处
+**Notice: This is only For the convinience of Chineses reader who cannot read English version directly**  
+**文章首发自我的CSDN博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，引用请注明出处**
 
 Author-`作者`
 Junseong Kim, Scatter Lab (codertimo@gmail.com / junseong.kim@scatter.co.kr)  
@@ -40,7 +40,7 @@ Pytorch implementation of Google AI's 2018 BERT, with simple annotation
 
 谷歌团队的Thang Luong直接定义：BERT模型开启了NLP的新时代    
 
-<div align=center><img width="450" height="450" src="https://img-blog.csdn.net/20181021135254746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
+<div align=center><img width="450" height="350" src="https://img-blog.csdn.net/20181021135254746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 
 从现在的大趋势来看，使用某种模型预训练一个语言模型看起来是一种比较靠谱的方法。从之前AI2的 ELMo，到 OpenAI的fine-tune transformer，再到Google的这个BERT，全都是对预训练的语言模型的应用。
