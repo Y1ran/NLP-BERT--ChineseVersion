@@ -10,10 +10,10 @@ Copyright 2018 Junseong Kim, Scatter Lab, respective BERT contributors
 Copyright (c) 2018 Alexander Rush : The Annotated Trasnformer
 
  Environment require:  
-               ---tqdm  
-               ---numpy  
-               ---torch>=0.4.0  
-               ---python3.6+  
+               ---`tqdm ` 
+               ---`numpy`  
+               ---`torch>=0.4.0` 
+               ---`python3.6+` 
 
 This version has based on the version in https://github.com/codertimo/BERT-pytorch  
 此中文版本仅基于原作者Junseong Kim与原Google项目的pytorch版本代码作为分享，如有其他用途请与原作者联系  
@@ -32,7 +32,7 @@ Pytorch implementation of Google AI's 2018 BERT, with simple annotation
 > Paper URL : https://arxiv.org/abs/1810.04805
 
 
-# 介绍
+## 一、什么是BERT模型？
 
 最近谷歌搞了个大新闻，公司AI团队新发布的BERT模型，在机器阅读理解顶级水平测试SQuAD1.1中表现出惊人的成绩：全部两个衡量指标上全面超越人类，并且还在11种不同NLP测试中创出最佳成绩，包括将GLUE基准推至80.4％（绝对改进7.6％），MultiNLI准确度达到86.7% （绝对改进率5.6％）等。可以预见的是，BERT将为NLP带来里程碑式的改变，也是NLP领域近期最重要的进展。
 ![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135223575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
@@ -46,7 +46,7 @@ Pytorch implementation of Google AI's 2018 BERT, with simple annotation
 
 BERT这个模型与其它两个不同的是，它在训练双向语言模型时以减小的概率把少量的词替成了Mask或者另一个随机的词。我个人感觉这个目的在于使模型被迫增加对上下文的记忆。至于这个概率，我猜是Jacob拍脑袋随便设的。增加了一个预测下一句的loss。这个看起来就比较新奇了。
 
-## BERT模型具有以下两个特点：
+### BERT模型具有以下两个特点：
 
 第一，是这个模型非常的深，12层，并不宽(wide），中间层只有1024，而之前的Transformer模型中间层有2048。这似乎又印证了计算机图像处理的一个观点——深而窄 比 浅而宽 的模型更好。
 
@@ -57,7 +57,8 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 目前此项目仍在开发中，后续会有不断更新，欢迎ＦＯＲＫ
 
 # 二、如何理解BERT模型
-**[1] BERT 要解决什么问题？**
+
+### BERT 要解决什么问题？
 
 通常情况 transformer 模型有很多参数需要训练。譬如 BERT BASE 模型: L=12, H=768, A=12, 需要训练的模型参数总数是 12 * 768 * 12 = 110M。这么多参数需要训练，自然需要海量的训练语料。如果全部用人力标注的办法，来制作训练数据，人力成本太大。
 
@@ -70,14 +71,12 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 ![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135434193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
 我们经常说，“说话不要颠三倒四，要通顺，要连贯”，意思是上下文的词汇，应该具有语义的连贯性。基于自然语言的连贯性，语言模型根据前文的词，预测下一个将出现的词。如果语言模型的参数正确，如果每个词的词向量设置正确，那么语言模型的预测，就应该比较准确。天下文章，数不胜数，所以训练数据，取之不尽用之不竭。
 
-深度学习四大要素，1. 训练数据、2. 模型、3. 算力、4. 应用。训练数据有了，接下去的问题是模型。
+深度学习四大要素，1. 训练数据、2. 模型、3. 算力、4. 应用。训练数据有了，接下去的问题是模型。关于模型，BERT提出了五个关键词 Pre-training、Deep、Bidirectional、Transformer、Language Understanding 。
 
 
-**[2] BERT 的五个关键词 Pre-training、Deep、Bidirectional、Transformer、Language Understanding 分别是什么意思？**
+### BERT的五个关键词分别是什么意思？
 
-《A Neural Probabilistic Language Model》这篇论文讲的 Language Model，严格讲是语言生成模型（Language Generative Model），预测语句中下一个将会出现的词汇。语言生成模型能不能直接移用到其它 NLP 问题上去？
-
-譬如，淘宝上有很多用户评论，能否把每一条用户转换成评分？-2、-1、0、1、2，其中 -2 是极差，+2 是极好。假如有这样一条用户评语，“买了一件鹿晗同款衬衫，没想到，穿在自己身上，不像小鲜肉，倒像是厨师”，请问这条评语，等同于 -2，还是其它？
+《A Neural Probabilistic Language Model》这篇论文讲的 Language Model，严格讲是语言生成模型（Language Generative Model），预测语句中下一个将会出现的词汇。语言生成模型能不能直接移用到其它 NLP 问题上去？譬如，淘宝上有很多用户评论，能否把每一条用户转换成评分？-2、-1、0、1、2，其中 -2 是极差，+2 是极好。假如有这样一条用户评语，“买了一件鹿晗同款衬衫，没想到，穿在自己身上，不像小鲜肉，倒像是厨师”，请问这条评语，等同于 -2，还是其它？
 
 语言生成模型，能不能很好地解决上述问题？进一步问，有没有 “通用的” 语言模型，能够理解语言的语义，适用于各种 NLP 问题？BERT 这篇论文的题目很直白，《BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding》，一眼看去，就能猜得到这篇文章会讲哪些内容。
 
@@ -89,7 +88,7 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 
 BERT 的作者认为，bi-directional 仍然不能完整地理解整个语句的语义，更好的办法是用上下文全向来预测[mask]，也就是用 “能/实现/语言/表征/../的/模型”，来预测[mask]。BERT 作者把上下文全向的预测方法，称之为 deep bi-directional。如何来实现上下文全向预测呢？BERT 的作者建议使用 Transformer 模型。这个模型由《Attention Is All You Need》一文发明。
 
-这个模型的核心是聚焦机制，对于一个语句，可以同时启用多个聚焦点，而不必局限于从前往后的，或者从后往前的，序列串行处理。不仅要正确地选择模型的结构，而且还要正确地训练模型的参数，这样才能保障模型能够准确地理解语句的语义。BERT 用了两个步骤，试图去正确地训练模型的参数。第一个步骤是把一篇文章中，15% 的词汇遮盖，让模型根据上下文全向地预测被遮盖的词。假如有 1 万篇文章，每篇文章平均有 100 个词汇，随机遮盖 15% 的词汇，模型的任务是正确地预测这 15 万个被遮盖的词汇。通过全向预测被遮盖住的词汇，来初步训练 Transformer 模型的参数。然后，用第二个步骤继续训练模型的参数。譬如从上述 1 万篇文章中，挑选 20 万对语句，总共 40 万条语句。挑选语句对的时候，其中 2*10 万对语句，是连续的两条上下文语句，另外 2*10 万对语句，不是连续的语句。然后让 Transformer 模型来识别这 20 万对语句，哪些是连续的，哪些不连续。
+这个模型的核心是聚焦机制，对于一个语句，可以同时启用多个聚焦点，而不必局限于从前往后的，或者从后往前的，序列串行处理。不仅要正确地选择模型的结构，而且还要正确地训练模型的参数，这样才能保障模型能够准确地理解语句的语义。BERT 用了两个步骤，试图去正确地训练模型的参数。第一个步骤是把一篇文章中，15% 的词汇遮盖，让模型根据上下文全向地预测被遮盖的词。假如有 1 万篇文章，每篇文章平均有 100 个词汇，随机遮盖 15% 的词汇，模型的任务是正确地预测这 15 万个被遮盖的词汇。通过全向预测被遮盖住的词汇，来初步训练 Transformer 模型的参数。然后，用第二个步骤继续训练模型的参数。譬如从上述 1 万篇文章中，挑选 20 万对语句，总共 40 万条语句。挑选语句对的时候，其中 2乘10万对语句，是连续的两条上下文语句，另外 2x10 万对语句，不是连续的语句。然后让 Transformer 模型来识别这 20 万对语句，哪些是连续的，哪些不连续。
 
 这两步训练合在一起，称为预训练 pre-training。训练结束后的 Transformer 模型，包括它的参数，是作者期待的通用的语言表征模型。
 
@@ -99,15 +98,13 @@ BERT 的作者认为，bi-directional 仍然不能完整地理解整个语句的
 
 BERT的新语言表示模型，它代表Transformer的双向编码器表示。与最近的其他语言表示模型不同，BERT旨在通过联合调节所有层中的上下文来预先训练深度双向表示。因此，预训练的BERT表示可以通过一个额外的输出层进行微调，适用于广泛任务的最先进模型的构建，比如问答任务和语言推理，无需针对具体任务做大幅架构修改。
 
-论文作者认为现有的技术严重制约了预训练表示的能力。其主要局限在于标准语言模型是单向的，这使得在模型的预训练中可以使用的架构类型很有限。
-
-在论文中，作者通过提出BERT：即Transformer的双向编码表示来改进基于架构微调的方法。
+论文作者认为现有的技术严重制约了预训练表示的能力。其主要局限在于标准语言模型是单向的，这使得在模型的预训练中可以使用的架构类型很有限。在论文中，作者通过提出BERT：即Transformer的双向编码表示来改进基于架构微调的方法。
 
 BERT 提出一种新的预训练目标：遮蔽语言模型（masked language model，MLM），来克服上文提到的单向性局限。MLM 的灵感来自 Cloze 任务（Taylor, 1953）。MLM 随机遮蔽模型输入中的一些 token，目标在于仅基于遮蔽词的语境来预测其原始词汇 id。
 
 与从左到右的语言模型预训练不同，MLM 目标允许表征融合左右两侧的语境，从而预训练一个深度双向 Transformer。除了遮蔽语言模型之外，本文作者还引入了一个“下一句预测”（next sentence prediction）任务，可以和MLM共同预训练文本对的表示。
 
-**论文的主要贡献在于：
+### 论文的主要贡献在于：
 
 证明了双向预训练对语言表示的重要性。与之前使用的单向语言模型进行预训练不同，BERT使用遮蔽语言模型来实现预训练的深度双向表示。
 论文表明，预先训练的表示免去了许多工程任务需要针对特定任务修改体系架构的需求。 BERT是第一个基于微调的表示模型，它在大量的句子级和token级任务上实现了最先进的性能，强于许多面向特定任务体系架构的系统。
@@ -118,19 +115,17 @@ BERT目前已经刷新的11项自然语言处理任务的最新记录包括：�
 ## 论文的核心：详解BERT模型架构
 本节介绍BERT模型架构和具体实现，并介绍预训练任务，这是这篇论文的核心创新。
 
-**模型架构
+### 模型架构
 
 BERT的模型架构是基于Vaswani et al. (2017) 中描述的原始实现multi-layer bidirectional Transformer编码器，并在tensor2tensor库中发布。由于Transformer的使用最近变得无处不在，论文中的实现与原始实现完全相同，因此这里将省略对模型结构的详细描述。
 
 在这项工作中，论文将层数（即Transformer blocks）表示为L，将隐藏大小表示为H，将self-attention heads的数量表示为A。在所有情况下，将feed-forward/filter 的大小设置为 4H，即H = 768时为3072，H = 1024时为4096。论文主要报告了两种模型大小的结果：
-BERT_{BASE} : L=12, H=768, A=12, Total Parameters=110M
-BERT_{LARGE} : L=24, H=1024, A=16, Total Parameters=340M
+* `BERT_{BASE}` : L=12, H=768, A=12, Total Parameters=110M
+* `BERT_{LARGE}` : L=24, H=1024, A=16, Total Parameters=340M
 
 为了进行比较，论文选择了BASE，它与OpenAI GPT具有相同的模型大小。然而，重要的是，BERT Transformer 使用双向self-attention，而GPT Transformer 使用受限制的self-attention，其中每个token只能处理其左侧的上下文。研究团队注意到，在文献中，双向 Transformer 通常被称为“Transformer encoder”，而左侧上下文被称为“Transformer decoder”，因为它可以用于文本生成。BERT，OpenAI GPT和ELMo之间的比较如图1所示。
 
-图1：预训练模型架构的差异。BERT使用双向Transformer。OpenAI GPT使用从左到右的Transformer。ELMo使用经过独立训练的从左到右和从右到左LSTM的串联来生成下游任务的特征。三个模型中，只有BERT表示在所有层中共同依赖于左右上下文。
-
-输入表示（input representation）
+BERT使用双向Transformer。OpenAI GPT使用从左到右的Transformer。ELMo使用经过独立训练的从左到右和从右到左LSTM的串联来生成下游任务的特征。三个模型中，只有BERT表示在所有层中共同依赖于左右上下文。
 
 论文的输入表示（input representation）能够在一个token序列中明确地表示单个文本句子或一对文本句子（例如， [Question, Answer]）。对于给定token，其输入表示通过对相应的token、segment和position embeddings进行求和来构造。图2是输入表示的直观表示：
 ![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135717183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
@@ -142,8 +137,6 @@ BERT_{LARGE} : L=24, H=1024, A=16, Total Parameters=340M
 * 每个序列的第一个token始终是特殊分类嵌入（[CLS]）。对应于该token的最终隐藏状态（即，Transformer的输出）被用作分类任务的聚合序列表示。对于非分类任务，将忽略此向量。
 * 句子对被打包成一个序列。以两种方式区分句子。首先，用特殊标记（[SEP]）将它们分开。其次，添加一个learned sentence A嵌入到第一个句子的每个token中，一个sentence B嵌入到第二个句子的每个token中。
 * 对于单个句子输入，只使用 sentence A嵌入。  
-
-
 
 
 ## 关键创新：预训练任务
@@ -161,9 +154,10 @@ BERT_{LARGE} : L=24, H=1024, A=16, Total Parameters=340M
 
 数据生成器将执行以下操作，而不是始终用[MASK]替换所选单词：
 
-80％的时间：用[MASK]标记替换单词，例如，my dog is hairy → my dog is [MASK]
-10％的时间：用一个随机的单词替换该单词，例如，my dog is hairy → my dog is apple
-10％的时间：保持单词不变，例如，my dog is hairy → my dog is hairy. 这样做的目的是将表示偏向于实际观察到的单词。
+* 80％的时间：用[MASK]标记替换单词，例如，my dog is hairy → my dog is [MASK]
+* 10％的时间：用一个随机的单词替换该单词，例如，my dog is hairy → my dog is apple
+* 10％的时间：保持单词不变，例如，my dog is hairy → my dog is hairy. 这样做的目的是将表示偏向于实际观察到的单词。  
+
 Transformer encoder不知道它将被要求预测哪些单词或哪些单词已被随机单词替换，因此它被迫保持每个输入token的分布式上下文表示。此外，因为随机替换只发生在所有token的1.5％（即15％的10％），这似乎不会损害模型的语言理解能力。
 
 使用MLM的第二个缺点是每个batch只预测了15％的token，这表明模型可能需要更多的预训练步骤才能收敛。团队证明MLM的收敛速度略慢于 left-to-right的模型（预测每个token），但MLM模型在实验上获得的提升远远超过增加的训练成本。
@@ -176,6 +170,7 @@ Transformer encoder不知道它将被要求预测哪些单词或哪些单词已�
 
 在为了训练一个理解句子的模型关系，预先训练一个二进制化的下一句测任务，这一任务可以从任何单语语料库中生成。具体地说，当选择句子A和B作为预训练样本时，B有50％的可能是A的下一个句子，也有50％的可能是来自语料库的随机句子。例如：
 
+```
 Input = [CLS] the man went to [MASK] store [SEP]
 
 he bought a gallon [MASK] milk [SEP]
@@ -187,6 +182,7 @@ Input = [CLS] the man [MASK] to the store [SEP]
 penguin [MASK] are flight ##less birds [SEP]
 
 Label = NotNext
+```
 
 团队完全随机地选择了NotNext语句，最终的预训练模型在此任务上实现了97％-98％的准确率。
 
@@ -219,7 +215,7 @@ BERT是一个语言表征模型（language representation model），通过超�
 * 预训练价值很大（Pre-training is important）："We believe that this is the first work to demonstrate that scaling to extreme model sizes also leads to large improvements on very small-scale tasks, provided that the model has been sufficiently pre-trained". 预训练已经被广泛应用在各个领域了（e.g. ImageNet for CV, Word2Vec in NLP），多是通过大模型大数据，这样的大模型给小规模任务能带来的提升有几何，作者也给出了自己的答案。BERT模型的预训练是用Transformer做的，但我想换做LSTM或者GRU的话应该不会有太大性能上的差别，当然训练计算时的并行能力就另当别论了。
 
 
-### 完整中文版BERT模型分析请移步我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)
+### 文章首发自我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，转载请注明出处
 
 
 
