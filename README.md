@@ -4,11 +4,10 @@
 ## 完整中文版BERT模型分析请移步我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)
 Author-作者
 Junseong Kim, Scatter Lab (codertimo@gmail.com / junseong.kim@scatter.co.kr)
-
 License
 This project following Apache 2.0 License as written in LICENSE file
 
-Copyright 2018 Junseong Kim, Scatter Lab, respective BERT contributors
+Copyright 2018 Junseong Kim, Scatter Lab, respective BERT contributors  
 Copyright (c) 2018 Alexander Rush : The Annotated Trasnformer
 
  Environment require:  
