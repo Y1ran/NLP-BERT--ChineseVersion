@@ -217,12 +217,9 @@ BERT是一个语言表征模型（language representation model），通过超�
 * 规模很重要（Scale matters）："One of our core claims is that the deep bidirectionality of BERT, which is enabled by masked LM pre-training, is the single most important improvement of BERT compared to previous work". 这种遮挡（mask）在语言模型上的应用对很多人来说已经不新鲜了，但确是BERT的作者在如此超大规模的数据+模型+算力的基础上验证了其强大的表征学习能力。这样的模型，甚至可以延伸到很多其他的模型，可能之前都被不同的实验室提出和试验过，只是由于规模的局限没能充分挖掘这些模型的潜力，而遗憾地让它们被淹没在了滚滚的paper洪流之中。
 * 预训练价值很大（Pre-training is important）："We believe that this is the first work to demonstrate that scaling to extreme model sizes also leads to large improvements on very small-scale tasks, provided that the model has been sufficiently pre-trained". 预训练已经被广泛应用在各个领域了（e.g. ImageNet for CV, Word2Vec in NLP），多是通过大模型大数据，这样的大模型给小规模任务能带来的提升有几何，作者也给出了自己的答案。BERT模型的预训练是用Transformer做的，但我想换做LSTM或者GRU的话应该不会有太大性能上的差别，当然训练计算时的并行能力就另当别论了。
 
+###  
 
-#### 文章首发自我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，转载请注明出处
-
-  
-  
-
+```model Tutorial```  
 # BERT-Pytorch使用
 ## 安装
 ```
