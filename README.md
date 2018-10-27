@@ -35,12 +35,11 @@ Pytorch implementation of Google AI's 2018 BERT, with simple annotation
 ## 一、什么是BERT模型？
 
 最近谷歌搞了个大新闻，公司AI团队新发布的BERT模型，在机器阅读理解顶级水平测试SQuAD1.1中表现出惊人的成绩：全部两个衡量指标上全面超越人类，并且还在11种不同NLP测试中创出最佳成绩，包括将GLUE基准推至80.4％（绝对改进7.6％），MultiNLI准确度达到86.7% （绝对改进率5.6％）等。可以预见的是，BERT将为NLP带来里程碑式的改变，也是NLP领域近期最重要的进展。  
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135223575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)  
-
+<div align=center><img width="400" height="450" src="https://img-blog.csdn.net/20181021135223575?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 谷歌团队的Thang Luong直接定义：BERT模型开启了NLP的新时代    
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135254746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+<div align=center><img width="450" height="450" src="https://img-blog.csdn.net/20181021135254746?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 
 从现在的大趋势来看，使用某种模型预训练一个语言模型看起来是一种比较靠谱的方法。从之前AI2的 ELMo，到 OpenAI的fine-tune transformer，再到Google的这个BERT，全都是对预训练的语言模型的应用。
@@ -64,12 +63,13 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 通常情况 transformer 模型有很多参数需要训练。譬如 BERT BASE 模型: L=12, H=768, A=12, 需要训练的模型参数总数是 12 * 768 * 12 = 110M。这么多参数需要训练，自然需要海量的训练语料。如果全部用人力标注的办法，来制作训练数据，人力成本太大。
 
 受《A Neural Probabilistic Language Model》论文的启发，BERT 也用 unsupervised 的办法，来训练 transformer 模型。神经概率语言模型这篇论文，主要讲了两件事儿，1. 能否用数值向量（word vector）来表达自然语言词汇的语义？2. 如何给每个词汇，找到恰当的数值向量？
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135336856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+<div align=center><img width="400" height="450" src="https://img-blog.csdn.net/20181021135336856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 这篇论文写得非常精彩，深入浅出，要言不烦，而且面面俱到。经典论文，值得反复咀嚼。很多同行朋友都熟悉这篇论文，内容不重复说了。常用的中文汉字有 3500 个，这些字组合成词汇，中文词汇数量高达 50 万个。假如词向量的维度是 512，那么语言模型的参数数量，至少是 512 * 50万 = 256M
 
 模型参数数量这么大，必然需要海量的训练语料。从哪里收集这些海量的训练语料？《A Neural Probabilistic Language Model》这篇论文说，每一篇文章，天生是训练语料。难道不需要人工标注吗？回答，不需要。
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135434193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)  
+<div align=center><img width="400" height="450" src="https://img-blog.csdn.net/20181021135434193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 我们经常说，“说话不要颠三倒四，要通顺，要连贯”，意思是上下文的词汇，应该具有语义的连贯性。基于自然语言的连贯性，语言模型根据前文的词，预测下一个将出现的词。如果语言模型的参数正确，如果每个词的词向量设置正确，那么语言模型的预测，就应该比较准确。天下文章，数不胜数，所以训练数据，取之不尽用之不竭。
 
 深度学习四大要素，1. 训练数据、2. 模型、3. 算力、4. 应用。训练数据有了，接下去的问题是模型。关于模型，BERT提出了五个关键词 Pre-training、Deep、Bidirectional、Transformer、Language Understanding 。
