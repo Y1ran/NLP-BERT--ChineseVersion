@@ -64,12 +64,12 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 
 受《A Neural Probabilistic Language Model》论文的启发，BERT 也用 unsupervised 的办法，来训练 transformer 模型。神经概率语言模型这篇论文，主要讲了两件事儿，1. 能否用数值向量（word vector）来表达自然语言词汇的语义？2. 如何给每个词汇，找到恰当的数值向量？
 
-<div align=center><img width="400" height="450" src="https://img-blog.csdn.net/20181021135336856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
+<div align=center><img width="400" height="500" src="https://img-blog.csdn.net/20181021135336856?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 这篇论文写得非常精彩，深入浅出，要言不烦，而且面面俱到。经典论文，值得反复咀嚼。很多同行朋友都熟悉这篇论文，内容不重复说了。常用的中文汉字有 3500 个，这些字组合成词汇，中文词汇数量高达 50 万个。假如词向量的维度是 512，那么语言模型的参数数量，至少是 512 * 50万 = 256M
 
 模型参数数量这么大，必然需要海量的训练语料。从哪里收集这些海量的训练语料？《A Neural Probabilistic Language Model》这篇论文说，每一篇文章，天生是训练语料。难道不需要人工标注吗？回答，不需要。
-<div align=center><img width="400" height="450" src="https://img-blog.csdn.net/20181021135434193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
+<div align=center><img width="450" height="450" src="https://img-blog.csdn.net/20181021135434193?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 我们经常说，“说话不要颠三倒四，要通顺，要连贯”，意思是上下文的词汇，应该具有语义的连贯性。基于自然语言的连贯性，语言模型根据前文的词，预测下一个将出现的词。如果语言模型的参数正确，如果每个词的词向量设置正确，那么语言模型的预测，就应该比较准确。天下文章，数不胜数，所以训练数据，取之不尽用之不竭。
 
 深度学习四大要素，1. 训练数据、2. 模型、3. 算力、4. 应用。训练数据有了，接下去的问题是模型。关于模型，BERT提出了五个关键词 Pre-training、Deep、Bidirectional、Transformer、Language Understanding 。
@@ -83,7 +83,8 @@ BERT这个模型与其它两个不同的是，它在训练双向语言模型时�
 
 这个题目有五个关键词，分别是 Pre-training、Deep、Bidirectional、Transformers、和 Language Understanding。其中 pre-training 的意思是，作者认为，确实存在通用的语言模型，先用文章预训练通用模型，然后再根据具体应用，用 supervised 训练数据，精加工（fine tuning）模型，使之适用于具体应用。为了区别于针对语言生成的 Language Model，作者给通用的语言模型，取了一个名字，叫语言表征模型 Language Representation Model。
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/2018102114002264?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+<div align=center><img width="450" height="450" src="https://img-blog.csdn.net/2018102114002264?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 能实现语言表征目标的模型，可能会有很多种，具体用哪一种呢？作者提议，用 Deep Bidirectional Transformers 模型。假如给一个句子 “能实现语言表征[mask]的模型”，遮盖住其中“目标”一词。从前往后预测[mask]，也就是用“能/实现/语言/表征”，来预测[mask]；或者，从后往前预测[mask]，也就是用“模型/的”，来预测[mask]，称之为单向预测 unidirectional。单向预测，不能完整地理解整个语句的语义。于是研究者们尝试双向预测。把从前往后，与从后往前的两个预测，拼接在一起 [mask1/mask2]，这就是双向预测 bi-directional。细节参阅《Neural Machine Translation by Jointly Learning to Align and Translate》。
 
@@ -95,8 +96,7 @@ BERT 的作者认为，bi-directional 仍然不能完整地理解整个语句的
 
 # 三、BERT模型解析
 首先来看下谷歌AI团队做的这篇论文。
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135554835?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
+<div align=center><img width="650" height="250" src="https://img-blog.csdn.net/20181021135554835?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 BERT的新语言表示模型，它代表Transformer的双向编码器表示。与最近的其他语言表示模型不同，BERT旨在通过联合调节所有层中的上下文来预先训练深度双向表示。因此，预训练的BERT表示可以通过一个额外的输出层进行微调，适用于广泛任务的最先进模型的构建，比如问答任务和语言推理，无需针对具体任务做大幅架构修改。
 
 论文作者认为现有的技术严重制约了预训练表示的能力。其主要局限在于标准语言模型是单向的，这使得在模型的预训练中可以使用的架构类型很有限。在论文中，作者通过提出BERT：即Transformer的双向编码表示来改进基于架构微调的方法。
@@ -129,7 +129,8 @@ BERT的模型架构是基于Vaswani et al. (2017) 中描述的原始实现multi-
 BERT使用双向Transformer。OpenAI GPT使用从左到右的Transformer。ELMo使用经过独立训练的从左到右和从右到左LSTM的串联来生成下游任务的特征。三个模型中，只有BERT表示在所有层中共同依赖于左右上下文。
 
 论文的输入表示（input representation）能够在一个token序列中明确地表示单个文本句子或一对文本句子（例如， [Question, Answer]）。对于给定token，其输入表示通过对相应的token、segment和position embeddings进行求和来构造。图2是输入表示的直观表示：
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135717183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+<div align=center><img width="650" height="250" src="https://img-blog.csdn.net/20181021135717183?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 具体如下：
 
@@ -190,18 +191,18 @@ Label = NotNext
 # 实验结果
 如前文所述，BERT在11项NLP任务中刷新了性能表现记录！在这一节中，团队直观呈现BERT在这些任务的实验结果，具体的实验设置和比较请阅读原论文.
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135953777?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+<div align=center><img width="550" height="550" src="https://img-blog.csdn.net/20181021135953777?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
+
 
 图3：我们的面向特定任务的模型是将BERT与一个额外的输出层结合而形成的，因此需要从头开始学习最小数量的参数。在这些任务中，（a）和（b）是序列级任务，而（c）和（d）是token级任务。在图中，E表示输入嵌入，Ti表示tokeni的上下文表示，[CLS]是用于分类输出的特殊符号，[SEP]是用于分隔非连续token序列的特殊符号。
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135810611?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+<div align=center><img width="750" height="220" src="https://img-blog.csdn.net/20181021135810611?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 图4：GLUE测试结果，由GLUE评估服务器给出。每个任务下方的数字表示训练样例的数量。“平均”一栏中的数据与GLUE官方评分稍有不同，因为我们排除了有问题的WNLI集。BERT 和OpenAI GPT的结果是单模型、单任务下的数据。所有结果来自https://gluebenchmark.com/leaderboard和https://blog.openai.com/language-unsupervised/
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135826274?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
-
+<div align=center><img width="550" height="550" src="https://img-blog.csdn.net/20181021135826274?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 图5：SQuAD 结果。BERT 集成是使用不同预训练检查点和fine-tuning seed的 7x 系统。
 
-![图片显示不出来时的文字说明](https://img-blog.csdn.net/20181021135853817?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+<div align=center><img width="450" height="350" src="https://img-blog.csdn.net/20181021135853817?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 图6：CoNLL-2003 命名实体识别结果。超参数由开发集选择，得出的开发和测试分数是使用这些超参数进行五次随机重启的平均值。
 
