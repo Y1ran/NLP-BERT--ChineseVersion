@@ -1,5 +1,6 @@
 # NLP-BERT 谷歌自然语言处理模型：BERT-基于pytorch
 **Notice: This is only For the convinience of Chineses reader who cannot read English version directly**
+**文章首发自我的CSDN博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，引用请注明出处
 
 Author-`作者`
 Junseong Kim, Scatter Lab (codertimo@gmail.com / junseong.kim@scatter.co.kr)  
@@ -202,7 +203,7 @@ Label = NotNext
 <div align=center><img width="550" height="550" src="https://img-blog.csdn.net/20181021135826274?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 图5：SQuAD 结果。BERT 集成是使用不同预训练检查点和fine-tuning seed的 7x 系统。
 
-<div align=center><img width="450" height="350" src="https://img-blog.csdn.net/20181021135853817?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
+<div align=center><img width="450" height="270" src="https://img-blog.csdn.net/20181021135853817?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzM5NTIxNTU0/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70"/></div>
 
 图6：CoNLL-2003 命名实体识别结果。超参数由开发集选择，得出的开发和测试分数是使用这些超参数进行五次随机重启的平均值。
 
@@ -217,9 +218,10 @@ BERT是一个语言表征模型（language representation model），通过超�
 * 预训练价值很大（Pre-training is important）："We believe that this is the first work to demonstrate that scaling to extreme model sizes also leads to large improvements on very small-scale tasks, provided that the model has been sufficiently pre-trained". 预训练已经被广泛应用在各个领域了（e.g. ImageNet for CV, Word2Vec in NLP），多是通过大模型大数据，这样的大模型给小规模任务能带来的提升有几何，作者也给出了自己的答案。BERT模型的预训练是用Transformer做的，但我想换做LSTM或者GRU的话应该不会有太大性能上的差别，当然训练计算时的并行能力就另当别论了。
 
 
-### 文章首发自我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，转载请注明出处
+#### 文章首发自我的博客：[NLP自然语言处理-谷歌BERT模型深度解析](https://blog.csdn.net/qq_39521554/article/details/83062188)，转载请注明出处
 
-
+  
+  
 
 # BERT-Pytorch使用
 ## 安装
